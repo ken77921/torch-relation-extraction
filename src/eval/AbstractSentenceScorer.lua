@@ -90,6 +90,7 @@ function AbstractSentenceScorer:process_line(line, pattern_map, tac_map, diction
     local query_id, tac_rel, sf_2, doc_info, start_1, end_1, start_2, end_2, pattern
     = string.match(line, "([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)")
 
+    --print(line)
     if self.params.normalizeDigits ~= '' and not self.params.fullPath then pattern = pattern:gsub("%d", self.params.normalizeDigits) end
 
     local tac_tensor = torch.Tensor({tac_map[tac_rel] or self.params.unkIdx})
@@ -110,10 +111,17 @@ function AbstractSentenceScorer:process_line(line, pattern_map, tac_map, diction
     end
 
     pattern_tensor = pattern_tensor:view(1, pattern_tensor:size(1))
+    --print(pattern_tensor:size())
     tac_tensor = tac_tensor:view(1, tac_tensor:size(1))
     local enitity_pair = query_id .. '\t' .. sf_2
-    local out_line = query_id .. '\t' .. tac_rel .. '\t' .. sf_2 .. '\t' .. doc_info .. '\t'
+    local out_line 
+    if (self.params.showTextPattern) then
+        out_line= query_id .. '\t' .. tac_rel .. '\t' .. sf_2 .. '\t' .. doc_info .. '|' .. pattern .. '\t'
             .. start_1 .. '\t' .. end_1 .. '\t' .. start_2 .. '\t' .. end_2 .. '\t'
+    else 
+        out_line = query_id .. '\t' .. tac_rel .. '\t' .. sf_2 .. '\t' .. doc_info .. '\t'
+            .. start_1 .. '\t' .. end_1 .. '\t' .. start_2 .. '\t' .. end_2 .. '\t'
+    end
 
     return enitity_pair, pattern, out_line, pattern_tensor, tac_tensor, seq_len
 end
@@ -230,6 +238,8 @@ function AbstractSentenceScorer:score_data(data, ep_tac_scores)
             io.write('\rseq length : ' .. seq_len); io.flush()
             local pattern_tensor = nn.JoinTable(1)(sub_data.pattern_tensor)
             local tac_tensor = nn.JoinTable(1)(sub_data.tac_tensor)
+            --print(tac_tensor:size())
+            --print(pattern_tensor:size())
             local scores = self:score_tac_relation(pattern_tensor, tac_tensor)
             for i = 1, scores:size(1) do
                 local ep = sub_data.ep[i]

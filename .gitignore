@@ -12,3 +12,7 @@ target/*
 *.blg
 *.pdf
 *.aux
+data/*
+bin/train/configs/*
+results/*
+models/*

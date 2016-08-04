@@ -12,8 +12,13 @@ OUT=$3
 #echo working in $PWD
 
 # get top k patterns
-SORTED_PREDICTION=`mktemp`
-sort -t$'\t' -k9 -nr $SCORED_CANDIDATE > $SORTED_PREDICTION
+
+TMPDIR=/iesl/canvas/hschang/temp
+
+SORTED_PREDICTION=`mktemp -p $TMPDIR`
+sort -T /iesl/canvas/hschang/temp -t$'\t' -k9 -nr $SCORED_CANDIDATE > $SORTED_PREDICTION
+
+>$OUT
 
 # read in tuned params
 while IFS='' read -r line || [[ -n "$line" ]]; do

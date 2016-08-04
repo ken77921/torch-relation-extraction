@@ -50,7 +50,8 @@ function UniversalSchemaEncoder:__init(params, row_table, row_encoder, col_table
     self.row_encoder = row_encoder
 
     -- set the criterion
-    if params.criterion == 'bpr' then require 'nn-modules/BPRLoss'; self.crit = nn.BPRLoss()
+    --if params.criterion == 'bpr' then require 'nn-modules/BPRLoss'; self.crit = nn.BPRLoss()
+    if params.criterion == 'bpr' then require 'nn-modules/BPRLoss_weighted'; self.crit = nn.BPRLoss()
     elseif  params.criterion == 'hinge' then self.crit = nn.MarginRankingCriterion(self.params.margin)
     elseif params.criterion == 'bce' then self.crit = nn.BCECriterion()
     else print('Must supply option to criterion. Valid options are: bpr, bce and hinge'); os.exit()
@@ -118,6 +119,7 @@ function UniversalSchemaEncoder:train(num_epochs)
             local batch = self.params.shuffle and batches[shuffle[i]] or batches[i]
             local example = batch.data
             local label = batch.label
+            --print(batch.label)
             epoch_error = epoch_error + self:optim_update(self.net, self.crit,
                 example, label, parameters, gradParameters, self.opt_config, self.opt_state, epoch)
 
@@ -129,16 +131,27 @@ function UniversalSchemaEncoder:train(num_epochs)
         end
         print(string.format('\nEpoch error = %f\n', epoch_error))
         if (epoch % self.params.evaluateFrequency == 0 and epoch < num_epochs) then
+            self:save_model(epoch)
             local map = self:evaluate(epoch)
-            if map == -1 then self:save_model(epoch-1)
-            elseif map > best_map then self:save_model('best'); best_map = map
+            if map>best_map then 
+                self:save_model('best')
+                best_map = map
             end
+            --if map == -1 then self:save_model(epoch)
+            --elseif map > best_map then self:save_model('best'); best_map = map
+            --end
         end
     end
+    self:save_model(num_epochs)
     local map = self:evaluate(num_epochs)
-    if map == -1 then self:save_model(num_epochs)
-    elseif map > best_map then self:save_model('best'); best_map = map
+    if map>best_map then 
+        self:save_model('best')
+        best_map = map
     end
+    --local map = self:evaluate(num_epochs)
+    --if map == -1 then self:save_model(num_epochs)
+    --elseif map > best_map then self:save_model('best'); best_map = map
+    --end
 end
 
 function UniversalSchemaEncoder:optim_update(net, criterion, x, y, parameters, grad_params, opt_config, opt_state, epoch)
@@ -209,7 +222,8 @@ function UniversalSchemaEncoder:gen_subdata_batches_four_col(data, sub_data, bat
         local neg_ep_batch = self:gen_neg(data, pos_ep_batch, size, max_neg)
         local rel_batch = self.params.colEncoder == 'lookup-table' and sub_data.rel:index(1, batch_indices) or sub_data.seq:index(1, batch_indices)
         local batch = { pos_ep_batch, rel_batch, neg_ep_batch}
-        table.insert(batches, { data = batch, label = torch.ones(size) })
+        --table.insert(batches, { data = batch, label = torch.ones(size) })
+        table.insert(batches, { data = batch, label = sub_data.label:index(1,batch_indices) })
         start = start + size
     end
 end

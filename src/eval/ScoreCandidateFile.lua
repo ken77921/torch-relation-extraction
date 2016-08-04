@@ -13,7 +13,7 @@ package.path = package.path .. ";src/?.lua;src/nn-modules/?.lua;src/eval/?.lua;s
 require 'torch'
 require 'rnn'
 require 'nn_modules_init'
-require 'RelationPoolFactory'
+-- require 'RelationPoolFactory'
 require 'ScoringFunctions'
 require 'TacEvalCmdArgs'
 
@@ -27,6 +27,7 @@ if params.gpuid >= 0 then require 'cunn'; cutorch.manualSeed(0); cutorch.setDevi
 
 -- load model
 local model = torch.load(params.model)
+--print(model)
 local kb_encoder = model.kb_col_table and model.kb_col_table
         or (model.row_encoder and model.row_encoder
         or (model.col_encoder and model.col_encoder
@@ -36,7 +37,7 @@ local text_encoder = model.text_encoder and model.text_encoder
         or model.encoder)
 local net = model.net
 net:evaluate(); kb_encoder:evaluate(); text_encoder:evaluate()
-
+--print(text_encoder)
 
 ---- main
 local scorer

@@ -31,7 +31,7 @@ cmd:option('-tokenAppend', '', 'append this to the end of each token')
 cmd:option('-fullPath', false, 'use the full input pattern without any segmenting')
 cmd:option('-scoringType', 'cosine', 'How to score candidate file. cosine=uschema cosine distance, pool=pooling uschema, classifier=dist supervision classifier')
 cmd:option('-scoring', 'standard', 'standard - score each relation, max - take only max per ep/tac combo, mean - avg each ep pattern to score each tac')
-
+cmd:option('-showTextPattern', false, 'show the original senetence for debugging purpose')
 
 
 function TacEvalCmdArgs:parse(cmd_args)

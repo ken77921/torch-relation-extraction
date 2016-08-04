@@ -22,6 +22,7 @@ HELP_MSG=`echo "./process-data.sh -i in_file -o out_file"$'\n' \
   "[-x convert from ep-rel pool to rel-rel pool]"
   `
 
+TMPDIR=/iesl/canvas/hschang/temp
 
 PY_FILE="$CUR_DIR/StringFile2IntFile.py"
 TORCH_FILE="$CUR_DIR/IntFile2Torch.lua"
@@ -31,12 +32,14 @@ while getopts i:o:v:m:l:s:pbcdrnghx opt; do
   i)
       IN_FILE=$OPTARG
       PY_CMD="$PY_CMD -i $IN_FILE"
-      INTERMEDIATE_FILE=`mktemp`
+      INTERMEDIATE_FILE=`mktemp -p $TMPDIR`
       PY_CMD="$PY_CMD -o $INTERMEDIATE_FILE"
       TORCH_CMD="$TORCH_CMD -inFile ${INTERMEDIATE_FILE}"
       ;;
   o)
       OUT_FILE=$OPTARG
+      OUT_DIR=$(dirname "${OUT_FILE}")
+      mkdir -p $OUT_DIR
       TORCH_CMD="$TORCH_CMD -outFile ${OUT_FILE}"
       ;;
   l)
@@ -106,7 +109,7 @@ SAVE_VOCAB_FILE=${IN_FILE}-vocab
 
 echo "Converting string file to int file in python"
 echo "${PY_FILE} ${PY_CMD}"
-python ${PY_FILE} ${PY_CMD}
+/home/hschang/anaconda2/bin/python ${PY_FILE} ${PY_CMD}
 
 echo "Converting int file to torch tensors"
 echo "${TORCH_FILE} ${TORCH_CMD}"
@@ -117,3 +120,5 @@ if [[ $REL_REL_CONVERT ]]
 then
     th ${CUR_DIR}/PooledEPRel2RelRel.lua -inFile ${OUT_FILE} -outFile ${OUT_FILE}-rel-rel
 fi
+
+rm $INTERMEDIATE_FILE

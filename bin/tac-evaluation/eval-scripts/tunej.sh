@@ -20,7 +20,10 @@ BEST_PARAMS_FILE=$OUT/params
 #BEST_PARAMS_FILE=$3params
 cp ${RESPONSE_PREFIX}$5 $RESPONSE
 
-slotlist=`mktemp`
+
+TMPDIR=/iesl/canvas/hschang/temp
+
+slotlist=`mktemp -p $TMPDIR`
 cut -f1,2 $RESPONSE \
 | tr '\t' ':' \
 | sort -u \
@@ -35,7 +38,7 @@ while read REL; do
   echo $REL
   OLD_FSCORE=0.0
   USED_JPARAM=$5
-  TMP_RESPONSE=`mktemp`
+  TMP_RESPONSE=`mktemp -p $TMPDIR`
   for JPARAM in ${PARAMS}
   do
     echo 'j = '${JPARAM}

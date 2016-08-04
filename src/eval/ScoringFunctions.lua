@@ -13,7 +13,12 @@ function CosineSentenceScorer:score_tac_relation(pattern_tensor, tac_tensor)
 
     local tac_encoded = self.kb_encoder:forward(self:to_cuda(tac_tensor)):clone()
     local pattern_encoded = self.text_encoder:forward(self:to_cuda(pattern_tensor)):clone()
-
+    
+    --print(tac_encoded:size())
+    --print(pattern_encoded:size())
+    --print(tac_tensor:size())
+    --print(pattern_tensor:size())
+    
     if tac_encoded:dim() == 3 then tac_encoded = tac_encoded:view(tac_encoded:size(1), tac_encoded:size(3)) end
     if pattern_encoded:dim() == 3 then pattern_encoded = pattern_encoded:view(pattern_encoded:size(1), pattern_encoded:size(3)) end
     local x = { tac_encoded, pattern_encoded }

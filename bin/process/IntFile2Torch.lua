@@ -85,7 +85,15 @@ for line in io.lines(params.inFile) do
         len_data.e2[i] = e2
         len_data.ep[i] = ep
         len_data.rel[i] = rel
+        --if(type(label)~= "number") then
+        --    print(line)
+        --end
+        --if pcall(function (len_data,label) len_data.label[i]=label  end) then
+        --    print(line)
+        --end
+        --print(line)
         len_data.label[i] = label
+        --print(label)
         e1 = tonumber(e1)
         e2 = tonumber(e2)
         ep = tonumber(ep)

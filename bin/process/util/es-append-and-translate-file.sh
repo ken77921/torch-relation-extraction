@@ -1,7 +1,8 @@
 #!/bin/bash
 
 IN=$1
-TRANSLATE="/home/pat/canvas/universal-schema/univSchema/torch/data/translate-dict-en_es"
+#TRANSLATE="/home/pat/canvas/universal-schema/univSchema/torch/data/translate-dict-en_es"
+TRANSLATE="/home/pat/canvas//torch-relation-extraction/vocabs/en_es.dictionary.uniq"
 
 paste <(cut -d'	' -f 1-2 $IN) <(cut -d'	' -f 3 $IN| 
 awk -v "T=$TRANSLATE" 'BEGIN{
