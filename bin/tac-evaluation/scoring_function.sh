@@ -11,10 +11,12 @@ EVAL_ARGS=${@:7}
 #total_lines=$(wc -l <${$CANDIDATES})
 #((lines_per_file = (total_lines + num_files - 1) / num_files))
 
+TMPDIR=/iesl/canvas/hschang/temp
 
 #To prevent out-of-memory error in lua
 echo "Splitting the candidate file"
-CANDIDATE_SPLIT_DIR=${CANDIDATES}_split
+#CANDIDATE_SPLIT_DIR=${CANDIDATES}_split
+CANDIDATE_SPLIT_DIR=`mktemp -d -p $TMPDIR`
 rm -rf $CANDIDATE_SPLIT_DIR
 mkdir -p $CANDIDATE_SPLIT_DIR
 SPLIT_CMD="split -l 500000 $CANDIDATES $CANDIDATE_SPLIT_DIR/candidate_split"
