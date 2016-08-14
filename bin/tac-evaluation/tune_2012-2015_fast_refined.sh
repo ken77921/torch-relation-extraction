@@ -5,10 +5,10 @@ scored_candidates_dir_parent=$2
 query_expanded=$3
 init_params=$4
 output_params=$5
-model=$6
-vocab=$7
-gpu=$8
-HAVE_INV_LOWEST=$9
+KDE_output_params=$6
+model=$7
+vocab=$8
+gpu=$9
 eval_args=${@:10}
 
 scoring_output_all_years=$scored_candidates_dir_parent/scoring_output
@@ -57,10 +57,23 @@ output_params_dir=`dirname $output_params`
 mkdir -p $output_params_dir
 
 
-PERFORMANCE_LOG=$output_params_dir/training_loss_log.txt
+PERFORMANCE_LOG=$output_params_dir/training_loss_log
 
-echo "python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/tune_threshold_2012-2015.py $scoring_output_all_years $init_params $output_params $NUM_ITER $REL_INV_CONFIG $HAVE_INV_LOWEST | tee $PERFORMANCE_LOG"
-python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/tune_threshold_2012-2015.py $scoring_output_all_years $init_params $output_params $NUM_ITER $REL_INV_CONFIG $HAVE_INV_LOWEST | tee $PERFORMANCE_LOG
-#python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/fast_threshold_tuning_2015.py $scored_candidates_dir/response_full_pp15_noNIL $ASSESSMENTS $init_params $output_params $NUM_ITER
+KDE_dir=$scored_candidates_dir_parent/KDE
+
+mkdir -p $KDE_dir
+
+/home/hschang/anaconda2/bin/python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/KDE_accuracy_estimation_local.py $scoring_output_all_years $REL_INV_CONFIG $KDE_dir/accuracy_estimations
+
+python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/tune_based_on_pred_distribution_2015.py $scored_candidates_dir/response_full_pp15_noNIL $scored_candidates_dir/inverses_with_tabs.tmp $REL_INV_CONFIG $KDE_dir/accuracy_estimations $KDE_dir/KDE_scoring
+
+LOWEST_THRESHOLD_LIST="0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4"
+for t in ${LOWEST_THRESHOLD_LIST}; do
+    echo "python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/tune_threshold_2012-2015.py $scoring_output_all_years $init_params ${output_params}_t$t $NUM_ITER $REL_INV_CONFIG $t | tee ${PERFORMANCE_LOG}_t$t"
+    python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/tune_threshold_2012-2015.py $scoring_output_all_years $init_params ${output_params}_t$t $NUM_ITER $REL_INV_CONFIG $t | tee ${PERFORMANCE_LOG}_t$t
+    INIT_RECALL=`tail -n 1 ${PERFORMANCE_LOG}_t$t`
+    echo "python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/tune_threshold_2012-2015.py $KDE_dir/KDE_scoring ${output_params}_t$t ${KDE_output_params}_t$t $NUM_ITER $REL_INV_CONFIG $t $INIT_RECALL | tee $KDE_dir/training_loss_log_t$t"
+    python $TH_RELEX_ROOT/bin/tac-evaluation/eval-scripts/tune_threshold_2012-2015.py $KDE_dir/KDE_scoring ${output_params}_t$t ${KDE_output_params}_t$t $NUM_ITER $REL_INV_CONFIG $t $INIT_RECALL | tee $KDE_dir/training_loss_log_t$t
+done
 
 rm $scored_candidates_dir/inverses_with_tabs.tmp

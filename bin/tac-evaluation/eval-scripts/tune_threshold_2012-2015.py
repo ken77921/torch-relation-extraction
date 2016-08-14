@@ -1,4 +1,5 @@
 import sys
+import os
 import unicodedata
 from collections import defaultdict
 
@@ -10,14 +11,14 @@ def deserialize_threshold_scores(threshold_score_path):
             line=line.replace("\n","")
             line_split=line.split("\t")
             if( len(line_split)==2 ):
-                num_correct_gt+=int(line_split[1])
+                num_correct_gt+=float(line_split[1])
                 continue
             rel,rel_org,conf,num_incorrect,num_correct=line_split
             #if(rel != rel_org):
             #    continue
             if(rel not in rel2thresh_cw):
                 rel2thresh_cw[rel]=[]
-            rel2thresh_cw[rel].append([ float(conf), [int(num_incorrect),int(num_correct)] ])
+            rel2thresh_cw[rel].append([ float(conf), [float(num_incorrect),float(num_correct)] ])
 
     rel2thresh_cw_acc={}
     for rel in rel2thresh_cw:
@@ -45,7 +46,7 @@ def compute_performance(correct,incorrect,total_correct):
     performance={'F1': F1, 'precision': precision, 'recall': recall, 'c': correct, 'w': incorrect}
     return performance
 
-def compute_current_cw(rel2current_thresh,rel2thresh_cw_acc,num_correct_gt):
+def compute_current_cw(rel2current_thresh,rel2thresh_cw_acc,num_correct_gt,init_recall):
     rel2current_cw={}
     total_cw=[0,0]
     for rel in rel2thresh_cw_acc:
@@ -60,9 +61,11 @@ def compute_current_cw(rel2current_thresh,rel2thresh_cw_acc,num_correct_gt):
         rel2current_cw[rel]=last_cw
         total_cw[0]+=last_cw[0]
         total_cw[1]+=last_cw[1]
+    if(init_recall != -1): #align the recall with the initialization
+        num_correct_gt=total_cw[1]/init_recall
     performance=compute_performance(total_cw[1],total_cw[0],num_correct_gt)
 
-    return rel2current_cw,performance
+    return rel2current_cw,performance,num_correct_gt
 
 def tune_threshold(rel2current_cw,rel2thresh_cw_acc,rel2current_thresh,performance,num_correct_gt,num_iter,inv_rel_mapping,have_inv_lowest):
     total_correct=performance['c']
@@ -78,7 +81,7 @@ def tune_threshold(rel2current_cw,rel2thresh_cw_acc,rel2current_thresh,performan
                 lowest_conf=have_inv_lowest
             #print rel, ' ', lowest_conf
             for conf,cw in rel2thresh_cw_acc[rel]:
-                if(conf <have_inv_lowest):
+                if(conf < lowest_conf):
                     break
                 new_c=other_correct+cw[1]
                 new_w=other_incorrect+cw[0]
@@ -118,6 +121,13 @@ if __name__ == '__main__':
     num_iter=int(sys.argv[4])
     inverse_mapping_path=sys.argv[5]
     have_inv_lowest=float(sys.argv[6])
+    init_recall=-1
+    if(len(sys.argv)==8):
+        init_recall=float(sys.argv[7])
+
+    out_dir=os.path.dirname(tuned_params_path)
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
 
     inv_rel_mapping=load_inv_mapping(inverse_mapping_path)
     #print inv_rel_mapping
@@ -133,8 +143,8 @@ if __name__ == '__main__':
             rel,thresh=line.split(' ')
             rel2current_thresh[rel]=float(thresh)
     
-    rel2current_cw,performance=compute_current_cw(rel2current_thresh,rel2thresh_cw_acc,num_correct_gt)
+    rel2current_cw,performance,num_correct_gt=compute_current_cw(rel2current_thresh,rel2thresh_cw_acc,num_correct_gt,init_recall)
     print performance
     performance=tune_threshold(rel2current_cw,rel2thresh_cw_acc,rel2current_thresh,performance,num_correct_gt,num_iter,inv_rel_mapping,have_inv_lowest)
-
+    print performance['recall']
     output_tuned_threshold(rel2current_thresh,tuned_params_path)

@@ -10,17 +10,21 @@ TAC_EVAL_ROOT=${TH_RELEX_ROOT}/bin/tac-evaluation
 MODEL_USchema=${TH_RELEX_ROOT}/models/uschema-english-relogged-100d_ep_weight_more_data/2016-07-30_15/15-model
 VOCAB_USchema=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data/train_processed_files/Ben_for_USchema_weighted_2_ep_avg_max_more_data_training/training_vocab-relations.txt
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2014_tune/params 
-TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2015_tune/params 
+#TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2012-2015_tune/params 
+TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/KDE_tune/params_t0.35
 #OUT_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2015-kb
 OUT_USchema=${OUT}/USchema
 mkdir -p $OUT_USchema
 
 #MODEL_LSTM=${TH_RELEX_ROOT}/models/lstm-bi-maxpool-paper_USchema_init_weighted_2_ep_more_data_normal/2016-08-01_20/9-model 
-MODEL_LSTM=${TH_RELEX_ROOT}/models/lstm-bi-maxpool-paper_USchema_init_weighted_2_ep_even_more/2016-08-04_23/15-model
+#MODEL_LSTM=${TH_RELEX_ROOT}/models/lstm-bi-maxpool-paper_USchema_init_weighted_2_ep_even_more/2016-08-08_15/15-model
+MODEL_LSTM=${TH_RELEX_ROOT}/models/lstm-bi-maxpool-paper_USchema_init_weighted_2_ep_even_more_aug/2016-08-10_01/15-model
 #VOCAB_LSTM=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data/train_processed_files/Ben_weighted_2_ep_more_data_normal_training/training_vocab-tokens.txt 
-VOCAB_LSTM=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data/train_processed_files/Ben_weighted_2_ep_even_more_training/training_vocab-tokens.txt 
+#VOCAB_LSTM=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data/train_processed_files/Ben_weighted_2_ep_even_more_training/training_vocab-tokens.txt 
+#VOCAB_LSTM=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data/train_processed_files/Ben_weighted_2_ep_even_more_aug_training/training_vocab-tokens.txt 
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_more_data_normal_max_seq_9/2014_tune/params 
-TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_15/2014_tune/params
+#TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/2012-2015_tune/params
+TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/KDE_tune/params_t0.35
 OUT_LSTM=${OUT}/LSTM
 mkdir -p $OUT_LSTM
 

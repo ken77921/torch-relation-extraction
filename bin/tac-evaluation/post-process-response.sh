@@ -7,7 +7,8 @@ RESPONSE=$4
 RESPONSE_PP=$5
 
 echo "Post processing for year $YEAR"
-export TAC_CONFIG=$TAC_ROOT/config/coldstart2015_UMass_IESL1.config
+#export TAC_CONFIG=$TAC_ROOT/config/coldstart2015_UMass_IESL1.config
+export TAC_CONFIG=$TAC_ROOT/config/coldstart2015_updated.config
 if [[ $PP == "pp14" ]]; then
   $TAC_ROOT/components/bin/postprocess2014.sh $RESPONSE $QUERY_EXPANDED /dev/null $RESPONSE_PP
 elif [[ $PP == "pp13" ]]; then
