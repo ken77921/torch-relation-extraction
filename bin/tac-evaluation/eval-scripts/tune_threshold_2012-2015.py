@@ -76,12 +76,14 @@ def tune_threshold(rel2current_cw,rel2thresh_cw_acc,rel2current_thresh,performan
             other_correct=total_correct-rel2current_cw[rel][1]
             other_incorrect=total_incorrect-rel2current_cw[rel][0]
             thresh_F1=[]
-            lowest_conf=0
-            if(rel in inv_rel_mapping):
-                lowest_conf=have_inv_lowest
+            #lowest_conf=0
+            #if(rel in inv_rel_mapping):
+            #    lowest_conf=have_inv_lowest
+            
             #print rel, ' ', lowest_conf
             for conf,cw in rel2thresh_cw_acc[rel]:
-                if(conf < lowest_conf):
+                #if(conf < lowest_conf):
+                if(conf < have_inv_lowest):
                     break
                 new_c=other_correct+cw[1]
                 new_w=other_incorrect+cw[0]

@@ -12,7 +12,7 @@ VOCAB_USchema=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_more_data_baseline_15/2014_tune/params
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_more_data_baseline_15/2015_tune/params
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_more_data_baseline_15/2012-2015_tune/params
-TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_more_data_baseline_15/KDE_tune/params_t0.35
+TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_more_data_baseline_15/KDE_tune/params_t0.25
 OUT_USchema=${OUT}/USchema
 
 #MODEL_LSTM=${TH_RELEX_ROOT}/models/lstm-bi-maxpool-paper_USchema_init_more_data_normal/2016-08-01_20/9-model
@@ -25,7 +25,7 @@ VOCAB_LSTM=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data/tr
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_more_data_sdrop_15/2015_tune/params
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_more_data_sdrop_15/2012-2015_tune/params
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_more_data_sdrop_aug_15/2012-2015_tune/params
-TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_more_data_sdrop_aug_15/KDE_tune/params_t0.35
+TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_more_data_sdrop_aug_15/KDE_tune/params_t0.25
 OUT_LSTM=${OUT}/LSTM
 
 MAX_SEQ=20
