@@ -11,7 +11,7 @@ VOCAB_USchema=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2014_tune/params 
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2012-2015_tune/params_t035
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/KDE_tune/params_t0.35
-TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/KDE_tune/params_t0.3
+TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/KDE_tune/params_t0.25_manually_tuned
 #OUT_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2015-kb
 OUT_USchema=${OUT}/USchema_kb
 
@@ -27,7 +27,7 @@ VOCAB_LSTM=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data/tr
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_15/2012-2015_tune/params
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/2012-2015_tune/params_t035
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/KDE_tune/params_t0.35
-TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/KDE_tune/params_t0.2
+TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/KDE_tune/params_t0.25_manual_tuned
 OUT_LSTM=${OUT}/LSTM_kb
 
 MAX_SEQ=20

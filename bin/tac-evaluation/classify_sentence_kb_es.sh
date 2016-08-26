@@ -20,7 +20,7 @@ VOCAB_USchema=${TH_RELEX_ROOT}/data/train_processed_files/en_es_org_log_training
 
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_more_data_baseline_15/KDE_tune/params_t0.35
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_es_en_org_full_all_tuned_t035/es-all/params
-#TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_es_en_org_all_tuned_t025/es-all/params
+#TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_es_en_org_all_tuned_t025/es-all/params_07
 TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_es_en_org_all_tuned_t01/es-all/params
 #OUT_USchema=${TH_RELEX_ROOT}/results/USchema_100d_more_data_baseline_15/2015-kb
 OUT_USchema=${OUT}/USchema_kb
@@ -41,7 +41,7 @@ VOCAB_LSTM=${TH_RELEX_ROOT}/data/train_processed_files/en_es_org_translated_trai
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_more_data_sdrop_aug_15/2012-2015_tune/params_t035
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_more_data_sdrop_aug_15/KDE_tune/params_t0.35
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_es_en_org_translated_t035_15/es-all/params
-#TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_es_en_org_translated_all_tuned_t025_15/es-all/params
+#TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_es_en_org_translated_all_tuned_t025_15/es-all/params_07
 TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_es_en_org_translated_all_tuned_t01_15/es-all/params
 
 #OUT_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_more_data_normal_max_seq_9/2015-kb

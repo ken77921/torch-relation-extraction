@@ -10,8 +10,8 @@ vocab=$7
 gpu=$8
 eval_args=${@:9}
 
-export TAC_CONFIG=$TAC_ROOT/config/coldstart2015_UMass_IESL1.config
 export TAC_ROOT=/iesl/canvas/hschang/TAC_2016/codes/tackbp2016-sf
+export TAC_CONFIG=$TAC_ROOT/config/coldstart2015_UMass_IESL1.config
 export TH_RELEX_ROOT=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction
 
 MAX_SEQ=20

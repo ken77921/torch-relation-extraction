@@ -125,7 +125,7 @@ if __name__ == '__main__':
         rel2num[rel]['relation']=rel
         rel2num[rel]['submitted']=len(score_list)
         rel2num[rel]['ignored']=0
-        rel2num[rel]['controdiction']=0
+        rel2num[rel]['contradiction']=0
         rel2num[rel]['duplicated']=0
         for qid,slot_filler,conf in score_list:
             #slot_filler_norm=slot_filler.lower()
@@ -138,7 +138,7 @@ if __name__ == '__main__':
                 continue
             correct_for_classifier,correct_group=rel2query2sf2label_group[rel][qid][slot_filler_norm]
             if(correct_for_classifier==-1): #contradictionary evidence in assessment file
-                rel2num[rel]['controdiction']+=1
+                rel2num[rel]['contradiction']+=1
                 continue
             
             answer_correct=1
@@ -154,7 +154,7 @@ if __name__ == '__main__':
             elif (conf != thresh_cw[-1][0] ):
                 thresh_cw.append( [conf,thresh_cw[-1][1][:] ] )
             thresh_cw[-1][1][answer_correct]+=1
-            rel2thresh_cw[rel]=thresh_cw
+        rel2thresh_cw[rel]=thresh_cw
         
         print rel2num[rel]
 

@@ -13,8 +13,8 @@ eval_args=${@:10}
 
 scoring_output_all_years=$scored_candidates_dir_parent/scoring_output
 
-export TAC_CONFIG=$TAC_ROOT/config/coldstart2015_updated.config
 export TAC_ROOT=/iesl/canvas/hschang/TAC_2016/codes/tackbp2016-sf
+export TAC_CONFIG=$TAC_ROOT/config/coldstart2015_updated.config
 export TH_RELEX_ROOT=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction
 
 >$scoring_output_all_years
