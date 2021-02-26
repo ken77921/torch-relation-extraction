@@ -32,8 +32,9 @@ cut -f1,2 $RESPONSE \
 for i in 1 2
 do
 echo iteration $i
-> ${BEST_PARAMS_FILE}
-
+#echo "" > ${BEST_PARAMS_FILE}
+>${BEST_PARAMS_FILE}
+#echo $RELLIST
 while read REL; do
   echo $REL
   OLD_FSCORE=0.0
@@ -53,9 +54,13 @@ while read REL; do
         FSCORE=0.0
     fi
     #echo $'\r'"F1: $FSCORE"
-    if [[ `echo "$FSCORE > $OLD_FSCORE" | bc` == 1 ]]; 
+    #if [[ `echo "$FSCORE > $OLD_FSCORE" | bc` == 1 ]]; 
+    #if (( $(awk 'BEGIN {print ("'$FSCORE'" > "'$OLD_FSCORE'")}') ));
+    #awk -v VAR1="$FSCORE" -v VAR2="$OLD_FSCORE" 'BEGIN {print (VAR1 > VAR2)}'
+    if (( $(awk -v VAR1="$FSCORE" -v VAR2="$OLD_FSCORE" 'BEGIN {print (VAR1 > VAR2)}') ));
+    #if (($FSCORE>$OLD_FSCORE));
     then
-     # echo $'\r'"F1: $FSCORE"
+     #echo $'\r'"F1: $FSCORE"
      OLD_FSCORE=$FSCORE
      USED_JPARAM=$JPARAM
     fi

@@ -42,7 +42,13 @@ function AbstractSentenceScorer:load_maps()
         for line in io.lines(self.params.dictionary) do
             -- space seperated
             local en, es = string.match(line, "([^\t]+) ([^\t]+)")
-            dictionary[es] = en
+            --print (line)
+            -- local en, es = string.match(line, "([^\t]+)\t([^\t]+)")
+            --print (en)
+            --print (es)
+            if es~=nil then
+                dictionary[es] = en
+            end
         end
     end
     local tac_map = {}
@@ -68,7 +74,8 @@ function AbstractSentenceScorer:process_file(pattern_map, tac_map, dictionary)
     print('Processing data')
     for line in io.lines(self.params.candidates) do
         local ep, _, out_line, pattern_tensor, tac_tensor, seq_len = self:process_line(line, pattern_map, tac_map, dictionary)
-        if seq_len <= self.params.maxSeq then
+        --print(pattern_tensor)
+        if seq_len <= self.params.maxSeq and seq_len > 0 then
             max_seq = math.max(seq_len, max_seq)
             if not data[seq_len] then data[seq_len] = {out_line={}, pattern_tensor={}, tac_tensor={}, ep={}} end
             local seq_len_data = data[seq_len]

@@ -203,11 +203,12 @@ function UniversalSchemaEncoder:gen_training_batches(data, shuffle)
         else  self:gen_subdata_batches_three_col(data, data, batches, self.row_table.weight:size(1), shuffle) end
     else
         -- old 4 col format
-        if #data > 0 then
-            for seq_size = 1, self.params.maxSeq and math.min(self.params.maxSeq, #data) or #data do
+        --if #data > 0 then
+            --for seq_size = 1, self.params.maxSeq and math.min(self.params.maxSeq, #data) or #data do
+            for seq_size = 1, self.params.maxSeq do
                 if data[seq_size] and data[seq_size].ep then self:gen_subdata_batches_four_col(data, data[seq_size], batches, data.num_eps, shuffle) end
             end
-        else  self:gen_subdata_batches_four_col(data, data, batches, data.num_eps, shuffle) end
+        --else  self:gen_subdata_batches_four_col(data, data, batches, data.num_eps, shuffle) end
     end
     return batches
 end
@@ -215,6 +216,7 @@ end
 function UniversalSchemaEncoder:gen_subdata_batches_four_col(data, sub_data, batches, max_neg, shuffle)
     local start = 1
     local rand_order = shuffle and torch.randperm(sub_data.ep:size(1)):long() or torch.range(1, sub_data.ep:size(1)):long()
+    --print(sub_data)
     while start <= sub_data.ep:size(1) do
         local size = math.min(self.params.batchSize, sub_data.ep:size(1) - start + 1)
         local batch_indices = rand_order:narrow(1, start, size)
@@ -427,16 +429,17 @@ function UniversalSchemaEncoder:load_train_data(data_file, entities)
         end
     else
         -- old 4 col format
-        if #train > 0 then
+        -- if #train > 0 then
             for i = 1, self.params.maxSeq do
                 if train[i] and train[i].ep then train[i] = self:load_sub_data_four_col(train[i], entities) end
             end
-        else  self:load_sub_data_four_col(train, entities) end
+        -- else  self:load_sub_data_four_col(train, entities) end
     end
     return train
 end
 
 function UniversalSchemaEncoder:load_sub_data_four_col(sub_data, entities)
+    --print(sub_data.rel)
     if entities then
         if self.params.rowEncoder == 'lookup-table' then
             sub_data.e1 = sub_data.e1:squeeze()
@@ -447,11 +450,17 @@ function UniversalSchemaEncoder:load_sub_data_four_col(sub_data, entities)
         then sub_data.ep = sub_data.ep:squeeze() end
     end
     if self.params.colEncoder == 'lookup-table' then
-        if self.params.relationPool == '' then sub_data.rel = sub_data.rel:squeeze()
+        if self.params.relationPool == '' and sub_data.rel:size(1)>1 then sub_data.rel = sub_data.rel:squeeze()
+        --if self.params.relationPool == '' then  if sub_data.rel:size(1)>1 then sub_data.rel = sub_data.rel:squeeze() else sub_data.rel = sub_data.rel:view(sub_data.rel:size(1)) end
         else sub_data.rel = sub_data.rel:view(sub_data.rel:size(1), sub_data.rel:size(2)) end
+        --if sub_data.rel:dim() == 1 then sub_data.rel = sub_data.rel:view(sub_data.seq:size(1), 1) end
+        --end
     else
         if sub_data.seq:dim() == 1 then sub_data.seq = sub_data.seq:view(sub_data.seq:size(1), 1) end
     end
+    if sub_data.rel:size(1)==1 then sub_data=NULL end
+    -- print(sub_data)
+    -- print(sub_data.rel)
     return sub_data
 end
 

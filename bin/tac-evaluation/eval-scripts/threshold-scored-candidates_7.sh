@@ -16,7 +16,7 @@ OUT=$3
 TMPDIR=/iesl/canvas/hschang/temp
 
 SORTED_PREDICTION=`mktemp -p $TMPDIR`
-sort -T /iesl/canvas/hschang/temp -t$'\t' -k9 -nr $SCORED_CANDIDATE > $SORTED_PREDICTION
+sort -T /iesl/canvas/hschang/temp -t$'\t' -k7 -nr $SCORED_CANDIDATE > $SORTED_PREDICTION
 
 >$OUT
 
@@ -25,7 +25,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
   REL=`echo $line | cut -d' ' -f 1`
   t=`echo $line | cut -d' ' -f 2`
   echo "Getting scores with threshold $t for $REL"
-  awk -v threshold=$t -F '\t' '{if($9 >= threshold ) print  }' $SORTED_PREDICTION | grep $REL >> $OUT
+  awk -v threshold=$t -F '\t' '{if($7 >= threshold) print  }' $SORTED_PREDICTION | grep $REL >> $OUT
 done < "$TUNED_PARAMS"
 
 echo computing performance for $OUT

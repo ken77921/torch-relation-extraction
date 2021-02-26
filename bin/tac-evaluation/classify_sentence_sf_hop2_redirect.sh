@@ -14,8 +14,8 @@ VOCAB_USchema=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2014_tune/params 
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2012-2015_tune/params 
 #TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/KDE_tune/params_t0.25_manually_tuned
-TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/hop2_recall_tuned/params_hop2
-TUNED_PARAMS_USchema_HOP1=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/hop2_recall_tuned/params_hop1
+TUNED_PARAMS_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/hop2_redirect_tuned/params_hop2
+TUNED_PARAMS_USchema_HOP1=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/hop2_redirect_tuned/params_hop1
 #OUT_USchema=${TH_RELEX_ROOT}/results/USchema_100d_weighted_2_ep_avg_max_more_data_15/2015-kb
 OUT_USchema=${OUT}/USchema
 mkdir -p $OUT_USchema
@@ -29,8 +29,8 @@ VOCAB_LSTM=/iesl/canvas/hschang/TAC_2016/codes/torch-relation-extraction/data/tr
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_more_data_normal_max_seq_9/2014_tune/params 
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/2012-2015_tune/params
 #TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/KDE_tune/params_t0.25_manual_tuned
-TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/hop2_recall_tuned/params_hop2
-TUNED_PARAMS_LSTM_HOP1=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/hop2_recall_tuned/params_hop1
+TUNED_PARAMS_LSTM=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/hop2_redirect_tuned/params_hop2
+TUNED_PARAMS_LSTM_HOP1=${TH_RELEX_ROOT}/results/LSTM_USchema_org_weighted_2_ep_even_more_aug_15/hop2_redirect_tuned/params_hop1
 OUT_LSTM=${OUT}/LSTM
 mkdir -p $OUT_LSTM
 

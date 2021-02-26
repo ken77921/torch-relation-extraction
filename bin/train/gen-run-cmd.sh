@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#RUN_CMD="/home/hschang/torch/install/bin/th ${TH_RELEX_ROOT}/src/${MODEL}.lua -train ${TRAIN_FILE_ROOT}/${TRAIN_FILE} -maxSeq $MAX_SEQ -learningRate $LEARN_RATE -rowDim ${ROW_DIM} -numEpochs ${MAX_EPOCHS} -resultDir ${LOG_ROOT} -colEncoder ${COL_ENCODER}"
+#RUN_CMD="th ${TH_RELEX_ROOT}/src/${MODEL}.lua -train ${TRAIN_FILE_ROOT}/${TRAIN_FILE} -maxSeq $MAX_SEQ -learningRate $LEARN_RATE -rowDim ${ROW_DIM} -numEpochs ${MAX_EPOCHS} -resultDir ${LOG_ROOT} -colEncoder ${COL_ENCODER}"
 RUN_CMD="/home/hschang/torch/install/bin/th ${TH_RELEX_ROOT}/src/${MODEL}.lua -train ${TRAIN_FILE_ROOT}/${TRAIN_FILE} -maxSeq $MAX_SEQ -learningRate $LEARN_RATE -rowDim ${ROW_DIM} -numEpochs ${MAX_EPOCHS} -resultDir ${LOG_ROOT} -colEncoder ${COL_ENCODER}"
 
 if [ "$SAVE_MODEL" ]; then

@@ -13,7 +13,13 @@ if [[ $PP == "pp14" ]]; then
   $TAC_ROOT/components/bin/postprocess2014.sh $RESPONSE $QUERY_EXPANDED /dev/null $RESPONSE_PP
 elif [[ $PP == "pp13" ]]; then
   $TAC_ROOT/components/bin/postprocess2013.sh $RESPONSE $QUERY_EXPANDED /dev/null $RESPONSE_PP
+elif [[ $PP == "pp13_es" ]]; then
+  export TAC_CONFIG=$TAC_ROOT/config/coldstart2016_es_run4.config
+  $TAC_ROOT/components/bin/postprocess2013.sh $RESPONSE $QUERY_EXPANDED /dev/null $RESPONSE_PP
 elif [[ $PP == "pp15" ]]; then
+  $TAC_ROOT/components/bin/postprocess2015.sh $RESPONSE $QUERY_EXPANDED /dev/null $RESPONSE_PP
+elif [[ $PP == "pp15_es" ]]; then
+  export TAC_CONFIG=$TAC_ROOT/config/coldstart2016_es_run4.config
   $TAC_ROOT/components/bin/postprocess2015.sh $RESPONSE $QUERY_EXPANDED /dev/null $RESPONSE_PP
 elif [[ $PP == "pp12" ]]; then
     COMP=$TAC_ROOT/components/pipeline/

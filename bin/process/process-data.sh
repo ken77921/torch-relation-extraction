@@ -113,12 +113,12 @@ echo "${PY_FILE} ${PY_CMD}"
 
 echo "Converting int file to torch tensors"
 echo "${TORCH_FILE} ${TORCH_CMD}"
-th ${TORCH_FILE} ${TORCH_CMD}
+~/home/hschang/torch/install/th ${TORCH_FILE} ${TORCH_CMD}
 
 
 if [[ $REL_REL_CONVERT ]]
 then
-    th ${CUR_DIR}/PooledEPRel2RelRel.lua -inFile ${OUT_FILE} -outFile ${OUT_FILE}-rel-rel
+    ~/home/hschang/torch/install/th ${CUR_DIR}/PooledEPRel2RelRel.lua -inFile ${OUT_FILE} -outFile ${OUT_FILE}-rel-rel
 fi
 
 rm $INTERMEDIATE_FILE

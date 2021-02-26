@@ -1,3 +1,5 @@
+#!/bin/bash
+
 CANDIDATES=$1
 OUT=$2
 VOCAB=$3
@@ -27,13 +29,13 @@ SCORED_CANDIDATES="${OUT}/scored_candidates"
 
 >$SCORED_CANDIDATES
 
-TEMP_SCORED_FILE="${OUT}/socred_candidate_piece"
+TEMP_SCORED_FILE="${OUT}/scored_candidate_piece"
 
 for CANDIDATE_SUBSET in $CANDIDATE_SPLIT_DIR/*
 do
     CAND_SCORE_CMD="/home/hschang/torch/install/bin/th ${TH_RELEX_ROOT}/src/eval/ScoreCandidateFile.lua -candidates $CANDIDATE_SUBSET -vocabFile $VOCAB -model $MODEL -gpuid $GPU -threshold 0 -outFile $TEMP_SCORED_FILE -maxSeq $MAX_SEQ $EVAL_ARGS"
     echo "Scoring candidate file: ${CAND_SCORE_CMD}"
-    ${CAND_SCORE_CMD}
+    eval ${CAND_SCORE_CMD}
     cat $TEMP_SCORED_FILE >> $SCORED_CANDIDATES
 done
 

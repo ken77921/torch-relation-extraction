@@ -2,8 +2,11 @@ local EncoderFactory = torch.class('EncoderFactory')
 
 
 function EncoderFactory:build_lookup_table(params, load_embeddings, vocab_size, dim)
+    --print(load_embeddings)
     local pre_trained_embeddings = load_embeddings ~= '' and torch.load(load_embeddings)
+    --print(pre_trained_embeddings:size())
     vocab_size = pre_trained_embeddings and math.max(vocab_size, pre_trained_embeddings:size(1)) or vocab_size
+    --print(vocab_size)
     local lookup_table
     -- never update word embeddings, these should be preloaded
     if params.noWordUpdate then
@@ -12,8 +15,8 @@ function EncoderFactory:build_lookup_table(params, load_embeddings, vocab_size, 
     else
         lookup_table = nn.LookupTable(vocab_size, dim)
     end
-
-    lookup_table.weight = pre_trained_embeddings or torch.rand(vocab_size, dim):add(-.1):mul(0.1) -- initialize in range [-.1, .1]
+    lookup_table.weight = pre_trained_embeddings or torch.rand(vocab_size, dim):mul(0.1):add(-.05) -- initialize in range [-.05, .05]
+    --print(lookup_table.weight:size())
     return lookup_table
 end
 
